@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
+    <ValidateMicroStationAddIns>true</ValidateMicroStationAddIns>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RootNamespace>BVSchemaChecker</RootNamespace>
+    <ProjectGuid>{D766335F-96F2-4026-BD77-7AF1C06FB638}</ProjectGuid>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\..\..\..\Program Files %28x86%29\Bentley\MicroStationV8iSS3\MicroStation\mdlapps\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;DEBUG;ADDIN</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bentley.DGNECPlugin">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\Bentley.DGNECPlugin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.DGNECPlugin.Common">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\Bentley.DGNECPlugin.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.EC.Persistence.2.0">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\Bentley.EC.Persistence.2.0.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.ECObjects.2.0">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\Bentley.ECObjects.2.0.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.ECSchema.ECPlugin">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\extensions\Bentley.ECSchema.ECPlugin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.ECSystem.2.0">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\Bentley.ECSystem.2.0.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.Exceptions">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\Bentley.Exceptions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.ExtensionDiscovery">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\Bentley.ExtensionDiscovery.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.FsrECPlugin">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\extensions\Bentley.FsrECPlugin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.General.1.0">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\Bentley.General.1.0.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="bentley.interop.microstationdgn">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\bentley.interop.microstationdgn.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="bentley.microstation">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\bentley.microstation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="bentley.microstation.interfaces.1.0">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\bentley.microstation.interfaces.1.0.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.MyComputerECPlugin">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\extensions\Bentley.MyComputerECPlugin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.Platform">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\Bentley.Platform.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.Windowing">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\Bentley.Windowing.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ECSchemaManager">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\ECSchemaManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ECSchemaPluginCore">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\ECFramework\ECSchemaPluginCore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PwApiWrapper">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\assemblies\PwApiWrapper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="ustation">
+      <HintPath>..\..\..\..\Program Files (x86)\Bentley\MicroStationV8iSS3\MicroStation\ustation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="commands.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Content Include="ReadMe.txt" />
+    <Content Include="Sample.txt" />
+    <EmbeddedResource Include="SchemaListForm.resx">
+      <DependentUpon>SchemaListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SchemaUtilityForm.resx">
+      <DependentUpon>SchemaUtilityForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BVSchemaChecker.mke" />
+    <None Include="StandardPostBuild.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BVSchemaChecker.cs" />
+    <Compile Include="CSVReporter.cs" />
+    <Compile Include="Events.cs" />
+    <Compile Include="KeyinCommands.cs" />
+    <Compile Include="LogWriter.cs" />
+    <Compile Include="SchemaListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SchemaListForm.Designer.cs">
+      <DependentUpon>SchemaListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaUtilityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SchemaUtilityForm.Designer.cs">
+      <DependentUpon>SchemaUtilityForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>call $(ProjectDir)StandardPostBuild.bat $(TargetPath) VALIDATEADDIN</PostBuildEvent>
+  </PropertyGroup>
+</Project>
