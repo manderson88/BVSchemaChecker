@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------------
-// $Workfile: $ : implementation of the log processing
+// $Workfile: LogWriter.cs $ : implementation of the log processing
 //
 // --------------------------------------------------------------------------------------
 // NOTICE TO ALL PERSONS HAVING ACCESS HERETO:  This document or recording contains 
@@ -16,10 +16,15 @@
 //---------------------------------------------------------------------------------------
 /*
  * CHANGE LOG
- * $Archive: $
- * $Revision:  $
- * $Modtime:  $
- * $History:$
+ * $Archive: /MDL/BVSchemaChecker/LogWriter.cs $
+ * $Revision: 1 $
+ * $Modtime: 2/09/17 7:35a $
+ * $History: LogWriter.cs $
+ * 
+ * *****************  Version 1  *****************
+ * User: Mark.anderson Date: 2/24/17    Time: 9:24a
+ * Created in $/MDL/BVSchemaChecker
+ * Initial VSS commit of the schema checker source code.
  * 
  */
 //----------------------------------------------------------------------------------------

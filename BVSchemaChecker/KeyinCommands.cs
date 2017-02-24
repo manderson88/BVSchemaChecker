@@ -1,5 +1,6 @@
 //---------------------------------------------------------------------------------------
-// $Workfile: $ : implementation of the form
+// $Workfile: KeyinCommands.cs $ : 
+// implementation of the keyin commands.
 //
 // --------------------------------------------------------------------------------------
 // NOTICE TO ALL PERSONS HAVING ACCESS HERETO:  This document or recording contains 
@@ -16,10 +17,15 @@
 //---------------------------------------------------------------------------------------
 /*
  * CHANGE LOG
- * $Archive: $
- * $Revision:  $
- * $Modtime:  $
- * $History:$
+ * $Archive: /MDL/BVSchemaChecker/KeyinCommands.cs $
+ * $Revision: 1 $
+ * $Modtime: 2/24/17 8:20a $
+ * $History: KeyinCommands.cs $
+ * 
+ * *****************  Version 1  *****************
+ * User: Mark.anderson Date: 2/24/17    Time: 9:24a
+ * Created in $/MDL/BVSchemaChecker
+ * Initial VSS commit of the schema checker source code.
  * 
  */
 //----------------------------------------------------------------------------------------
@@ -188,8 +194,10 @@ internal class KeyinCommands
         List<string> schemaList = new List<string>();
         //set to silent mode
         m_silentMode = false;
+        if (1 == BVSchemaChecker.mdlSystem_startedAsAutomationServer() && ((null != unparsed) && unparsed == "FROM_HOOK"))
+            return;
         //if an unparsed string is sent in then set silent to true
-        if ((null != unparsed) && (unparsed.Length > 0))
+        if (1!=BVSchemaChecker.mdlSystem_startedAsAutomationServer()&&((null != unparsed) && (unparsed.Length > 0)))
             m_silentMode = true;
         //see if it is an imodel if so then don't check.
         if (1 == BVSchemaChecker.IsIModel(BVSchemaChecker.ComApp.ActiveModelReference.MdlModelRefP()))
@@ -267,7 +275,7 @@ internal class KeyinCommands
                 BVSchemaChecker.ComApp.MessageCenter.AddMessage("no schema in the file", 
                                                                 "nothing found", 
                                                                 BCOM.MsdMessageCenterPriority.Info,
-                                                                m_silentMode);
+                                                                (unparsed != "FROM_HOOK"));
         }
         catch (Exception e)
         {
@@ -318,6 +326,11 @@ internal class KeyinCommands
         //this will update the list for this user.
         BVSchemaChecker.ComApp.ActiveWorkspace.AddConfigurationVariable("BV_SCHEMA_WHITELIST", fullList.ToString(), true);
     }
+    /// <summary>
+    /// Add the on close event handler
+    /// this is available to allow the config to be set to not check for AS
+    /// </summary>
+    /// <param name="unparsed"></param>
     public static void AddEventHandler(string unparsed)
     {
         Events.SetEventHandlers();

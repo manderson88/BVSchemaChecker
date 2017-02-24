@@ -49,8 +49,6 @@
             this.lblAbout.Name = "lblAbout";
             this.lblAbout.Size = new System.Drawing.Size(189, 52);
             this.lblAbout.TabIndex = 1;
-            this.lblAbout.Text = "Black && Veatch Schema Checker Tool\r\nversion 2.2 Feb-09-2017\r\n\r\nThis is the uncer" +
-    "tified version";
             // 
             // AboutForm
             // 
