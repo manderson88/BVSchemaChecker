@@ -18,7 +18,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
-    <StartProgram>C:\Program Files %28x86%29\Bentley\OpenPlantModeler V8i\OpenPlantModeler\OpenPlantModeler.exe</StartProgram>
+    <StartProgram>C:\Program Files %28x86%29\Bentley\MicroStationV8iSS3\MicroStation\ustation.exe</StartProgram>
     <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
   </PropertyGroup>
 </Project>
