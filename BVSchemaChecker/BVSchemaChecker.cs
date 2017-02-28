@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------------------
-// $Workfile: $ : implementation of the form
+// $Workfile: BVSchemaChecker.cs $ : 
 //
 // --------------------------------------------------------------------------------------
 // NOTICE TO ALL PERSONS HAVING ACCESS HERETO:  This document or recording contains 
@@ -16,10 +16,15 @@
 //---------------------------------------------------------------------------------------
 /*
  * CHANGE LOG
- * $Archive: $
- * $Revision:  $
- * $Modtime:  $
- * $History:$
+ * $Archive: /MDL/BVSchemaChecker/BVSchemaChecker.cs $
+ * $Revision: 1 $
+ * $Modtime: 2/24/17 8:20a $
+ * $History: BVSchemaChecker.cs $
+ * 
+ * *****************  Version 1  *****************
+ * User: Mark.anderson Date: 2/24/17    Time: 9:24a
+ * Created in $/MDL/BVSchemaChecker
+ * Initial VSS commit of the schema checker source code.
  * 
  */
 //----------------------------------------------------------------------------------------
@@ -58,8 +63,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 namespace BVSchemaChecker
 {
-    
-    
     /// <summary>When loading an AddIn MicroStation looks for a class
     /// derived from AddIn.</summary>
     [Bentley.MicroStation.AddInAttribute(MdlTaskID="BVSchemaChecker", 
@@ -110,6 +113,10 @@ namespace BVSchemaChecker
             CharSet = SRI.CharSet.Ansi, CallingConvention = SRI.CallingConvention.Cdecl)]
         internal static extern void mdlWriteToFileHook(int bSilent);
 
+        [SRI.DllImport("USTATION.DLL", EntryPoint = "mdlSystem_startedAsAutomationServer",
+            CallingConvention = SRI.CallingConvention.Cdecl, CharSet = SRI.CharSet.Ansi)]
+        internal static extern int mdlSystem_startedAsAutomationServer();
+ 
         /// <summary>
         /// tells if the model is an imodel. 1 it is 0 it is not.
         /// </summary>
@@ -151,7 +158,8 @@ namespace BVSchemaChecker
         {
         s_comApp = BMI.Utilities.ComApp;
         s_bIsOPM = ((s_comApp.Name.CompareTo("OpenPlantModeler")==0)||(s_comApp.Name.CompareTo("BRCM") == 0));
-        s_bIsUSTN = ((s_comApp.Name.CompareTo("ustation") == 0)||(s_comApp.Name.CompareTo("AECOsimBuildingDesigner")==0));
+        s_bIsUSTN = ((s_comApp.Name.CompareTo("ustation") == 0)||
+            (s_comApp.Name.CompareTo("AECOsimBuildingDesigner")==0));
         s_comApp.CadInputQueue.SendKeyin("mdl load wpahelper");
         s_whiteList = new List<string>();
         string whiteList="";
@@ -248,7 +256,8 @@ namespace BVSchemaChecker
         /// <param name="oModel"></param>
         /// <param name="ecSession"></param>
         /// <returns></returns>
-        public static ECSR.RepositoryConnection OpenConnectionToModel(BCOM.ModelReference oModel, ECSS.ECSession ecSession)
+        public static ECSR.RepositoryConnection OpenConnectionToModel(
+            BCOM.ModelReference oModel, ECSS.ECSession ecSession)
         {
             ECSR.RepositoryConnectionService repositoryConnectionService;
             repositoryConnectionService = ECSR.RepositoryConnectionServiceFactory.GetService();
@@ -365,6 +374,7 @@ namespace BVSchemaChecker
 
             foreach (BCOM.Attachment oAttachment in pModel.Attachments)
             {
+                if(!oAttachment.IsMissingFile)
                 if (1 == IsIModel(oAttachment.MdlModelRefP()))
                     return true;
 
@@ -382,7 +392,8 @@ namespace BVSchemaChecker
         /// </summary>
         /// <param name="connection">The connection to  the  active dgn file.</param>
         /// <returns></returns>
-        public static bool FindEmbededSchemas(ECSR.RepositoryConnection connection,List<string> schemas)
+        public static bool FindEmbededSchemas(ECSR.RepositoryConnection connection,
+                                              List<string> schemas)
         {
             bool bStatus = false;
             System.Collections.Generic.IList<ECOS.IECSchema> schemaList;
@@ -422,7 +433,8 @@ namespace BVSchemaChecker
                                 BVSchemaChecker.ComApp.ActiveDesignFile.FullName, 
                                 BVSchemaChecker.ComApp.ActiveModelReference.Name), true);
                     }
-                    if ((!IsOnWhiteList(schema.Name)) && (!IsABDBaseSchema(schema.Name)) && (!IsOPMSchema(schema.Name)) && (!IsBRCMSchema(schema.Name)))
+                    if ((!IsOnWhiteList(schema.Name)) && (!IsABDBaseSchema(schema.Name)) && 
+                        (!IsOPMSchema(schema.Name)) && (!IsBRCMSchema(schema.Name)))
                     {
                         if ((s_bIsUSTN) || ((s_bIsOPM) && (((schema.Name.CompareTo("OpenPlant") != 0)
                                                 && (schema.Name.CompareTo("OpenPlant_3D") != 0)))))
@@ -445,7 +457,9 @@ namespace BVSchemaChecker
                                 fullSchemaName, false);
                     }
 
-                    if ((!IsOnWhiteList(schema.Name)) && (!IsABDBaseSchema(schema.Name))&&(!IsOPMSchema(schema.Name))&&(!IsBRCMSchema(schema.Name)))
+                    if ((!IsOnWhiteList(schema.Name)) && 
+                        (!IsABDBaseSchema(schema.Name))&&(!IsOPMSchema(schema.Name))&&
+                        (!IsBRCMSchema(schema.Name)))
                         schemas.Add(fullSchemaName);
                 }
             }

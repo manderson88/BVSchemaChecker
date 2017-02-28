@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------------
-// $Workfile: $ : implementation of the form
+// $Workfile: SchemaUtilityForm.cs $ : implementation of the form
 //
 // --------------------------------------------------------------------------------------
 // NOTICE TO ALL PERSONS HAVING ACCESS HERETO:  This document or recording contains 
@@ -16,10 +16,15 @@
 //---------------------------------------------------------------------------------------
 /*
  * CHANGE LOG
- * $Archive: $
- * $Revision:  $
- * $Modtime:  $
- * $History:$
+ * $Archive: /MDL/BVSchemaChecker/SchemaUtilityForm.cs $
+ * $Revision: 1 $
+ * $Modtime: 11/17/16 12:03p $
+ * $History: SchemaUtilityForm.cs $
+ * 
+ * *****************  Version 1  *****************
+ * User: Mark.anderson Date: 2/24/17    Time: 9:25a
+ * Created in $/MDL/BVSchemaChecker
+ * Initial VSS commit of the schema checker source code.
  * 
  */
 //----------------------------------------------------------------------------------------
