@@ -46,7 +46,7 @@ namespace BVSchemaChecker
         public static string FileName { get; set; } 
         /// <summary>
         /// Creates the report file.  The location is based on the cfg var
-        /// BV_SCHEMACHECKER or if that is not set then MS_TMP.  
+        /// BV_SCHEMACHECKER_OUT or if that is not set then MS_TMP.  
         /// </summary>
         /// <param name="fileName">The name for the report file</param>
         public static void CreateReport(string _fileName) // use uStation API to get the uStation temp directory

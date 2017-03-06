@@ -205,12 +205,14 @@ internal class KeyinCommands
             BVSchemaChecker.ComApp.MessageCenter.AddMessage("this is an i-model", "i-models are not processed", BCOM.MsdMessageCenterPriority.Info, false);
             return;
         }
-        //there is an imodel attachment process special.
-        if (BVSchemaChecker.HasIModelReference(BVSchemaChecker.ComApp.ActiveModelReference))
-        {
-            BVSchemaChecker.ComApp.MessageCenter.AddMessage("Has IModel Attached", 
+        //if there are references then we process special.
+        if ( BVSchemaChecker.ComApp.ActiveModelReference.Attachments.Count>0)
+        {//if the references are imodels then notify the users.
+            if(BVSchemaChecker.HasIModelReference(BVSchemaChecker.ComApp.ActiveModelReference))
+                BVSchemaChecker.ComApp.MessageCenter.AddMessage("Has IModel Attached", 
                                         "This file has an imodel in the attachment set", 
                                         BCOM.MsdMessageCenterPriority.Info, false);
+            
             BCOM.DesignFile workFile = BVSchemaChecker.ComApp.OpenDesignFileForProgram(
                                         BVSchemaChecker.ComApp.ActiveDesignFile.FullName, true);
             //create a model in the file that has no references
@@ -326,6 +328,34 @@ internal class KeyinCommands
         //this will update the list for this user.
         BVSchemaChecker.ComApp.ActiveWorkspace.AddConfigurationVariable("BV_SCHEMA_WHITELIST", fullList.ToString(), true);
     }
+    /// <summary>
+    /// dump the white list to the schema form.   This is more a diagnostic but 
+    /// will be in the api.
+    /// </summary>
+    /// <param name="unparsed"></param>
+    public static void DumpWhiteList(string unparsed)
+    {
+        string whiteList;
+        if (BVSchemaChecker.ComApp.ActiveWorkspace.IsConfigurationVariableDefined("BV_SCHEMA_WHITELIST"))
+        {
+            whiteList = BVSchemaChecker.ComApp.ActiveWorkspace.ExpandConfigurationVariable("BV_SCHEMA_WHITELIST");
+
+            string[] schema = whiteList.Split(':');
+
+            List<string> _list = new List<string>();
+            for (int i = 0; i < schema.Length; i++)
+                _list.Add(schema[i]);
+
+            SchemaListForm _form = new SchemaListForm();
+            _form.SetSchemaNames(_list);
+            _form.ShowDialog();
+        }
+        else
+        {
+            System.Windows.Forms.MessageBox.Show("No White List Defined", "BV_SCHEMA_WHITELIST", System.Windows.Forms.MessageBoxButtons.OK);
+        }
+    }
+
     /// <summary>
     /// Add the on close event handler
     /// this is available to allow the config to be set to not check for AS

@@ -25,6 +25,7 @@
             <Keyword CommandWord="Traverse"> </Keyword>
             <Keyword CommandWord="Selector"></Keyword>
           <Keyword CommandWord="apndWhite"></Keyword>
+          <Keyword CommandWord="dumpWhite"></Keyword>
           <Keyword CommandWord="OnClose"></Keyword>
         <Keyword SubtableRef="HelpOptions" CommandWord="help"><Options Required="true"/></Keyword>
         </KeyinTable>
@@ -43,8 +44,12 @@
                   Function="BVSchemaChecker.KeyinCommands.BVSchemaCheckerTraverseRepository"/>
       <KeyinHandler Keyin="BVSchemaChecker SELECTOR"
                     Function="BVSchemaChecker.KeyinCommands.BVSchemaCheckerProjectControl"/>
+      
       <KeyinHandler Keyin="BVSchemaChecker apndWhite"
                     Function="BVSchemaChecker.KeyinCommands.AddToWhiteList"/>
+      <KeyinHandler Keyin="BVSchemaChecker dumpWhite"
+                    Function="BVSchemaChecker.KeyinCommands.DumpWhiteList"/>
+      
       <KeyinHandler Keyin="BVSchemaChecker OnClose"
                     Function="BVSchemaChecker.KeyinCommands.AddEventHandler"/>
     <KeyinHandler Keyin="BVSchemaChecker Help About"

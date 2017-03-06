@@ -112,7 +112,11 @@ namespace BVSchemaChecker
         [SRI.DllImport("WPAHelper.dll", EntryPoint = "addWriteToFileHook",
             CharSet = SRI.CharSet.Ansi, CallingConvention = SRI.CallingConvention.Cdecl)]
         internal static extern void mdlWriteToFileHook(int bSilent);
-
+        /// <summary>
+        /// use this to check to see if the application is running as an AS client
+        /// not too sure how well it is working.
+        /// </summary>
+        /// <returns></returns>
         [SRI.DllImport("USTATION.DLL", EntryPoint = "mdlSystem_startedAsAutomationServer",
             CallingConvention = SRI.CallingConvention.Cdecl, CharSet = SRI.CharSet.Ansi)]
         internal static extern int mdlSystem_startedAsAutomationServer();
@@ -163,7 +167,8 @@ namespace BVSchemaChecker
         s_comApp.CadInputQueue.SendKeyin("mdl load wpahelper");
         s_whiteList = new List<string>();
         string whiteList="";
-        
+        //check to see if there is a white list of acceptable schema. This is stored
+        //in the config file.  There is a command to build the list.
         if(s_comApp.ActiveWorkspace.IsConfigurationVariableDefined("BV_SCHEMA_WHITELIST"))
             whiteList= s_comApp.ActiveWorkspace.ConfigurationVariableValue("BV_SCHEMA_WHITELIST", true);
 
