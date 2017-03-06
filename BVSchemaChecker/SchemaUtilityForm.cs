@@ -17,9 +17,14 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/SchemaUtilityForm.cs $
- * $Revision: 1 $
- * $Modtime: 11/17/16 12:03p $
+ * $Revision: 2 $
+ * $Modtime: 2/28/17 7:58a $
  * $History: SchemaUtilityForm.cs $
+ * 
+ * *****************  Version 2  *****************
+ * User: Mark.anderson Date: 3/06/17    Time: 12:20p
+ * Updated in $/MDL/BVSchemaChecker
+ * updated version information added white list
  * 
  * *****************  Version 1  *****************
  * User: Mark.anderson Date: 2/24/17    Time: 9:25a

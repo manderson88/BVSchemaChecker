@@ -18,9 +18,14 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/KeyinCommands.cs $
- * $Revision: 1 $
- * $Modtime: 2/24/17 8:20a $
+ * $Revision: 2 $
+ * $Modtime: 3/06/17 9:38a $
  * $History: KeyinCommands.cs $
+ * 
+ * *****************  Version 2  *****************
+ * User: Mark.anderson Date: 3/06/17    Time: 12:20p
+ * Updated in $/MDL/BVSchemaChecker
+ * updated version information added white list
  * 
  * *****************  Version 1  *****************
  * User: Mark.anderson Date: 2/24/17    Time: 9:24a

@@ -17,9 +17,14 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/CSVReporter.cs $
- * $Revision: 1 $
- * $Modtime: 2/09/17 7:34a $
+ * $Revision: 2 $
+ * $Modtime: 3/06/17 10:01a $
  * $History: CSVReporter.cs $
+ * 
+ * *****************  Version 2  *****************
+ * User: Mark.anderson Date: 3/06/17    Time: 12:20p
+ * Updated in $/MDL/BVSchemaChecker
+ * updated version information added white list
  * 
  * *****************  Version 1  *****************
  * User: Mark.anderson Date: 2/24/17    Time: 9:24a
