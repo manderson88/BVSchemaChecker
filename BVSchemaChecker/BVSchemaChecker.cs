@@ -377,21 +377,28 @@ namespace BVSchemaChecker
         /// <returns></returns>
         public static bool HasIModelReference(BCOM.ModelReference pModel)
         {
-            if((!pModel.IsAttachment) ||(
-                (pModel.IsAttachment)&&(!pModel.AsAttachment.IsMissingFile)))
-                if (1 == IsIModel(pModel.MdlModelRefP()))
+            try
+            {
+                if ((!pModel.IsAttachment) || (
+                    (pModel.IsAttachment) && (!pModel.AsAttachment.IsMissingFile)))
+                    if (1 == IsIModel(pModel.MdlModelRefP()))
                         return true;
 
-            foreach (BCOM.Attachment oAttachment in pModel.Attachments)
-            {
-                if(!oAttachment.IsMissingFile)
-                if (1 == IsIModel(oAttachment.MdlModelRefP()))
-                    return true;
-
-                foreach (BCOM.Attachment a in oAttachment.Attachments)
+                foreach (BCOM.Attachment oAttachment in pModel.Attachments)
                 {
-                    return HasIModelReference((BCOM.ModelReference)a);
+                    if (!oAttachment.IsMissingFile)
+                        if (1 == IsIModel(oAttachment.MdlModelRefP()))
+                            return true;
+
+                    foreach (BCOM.Attachment a in oAttachment.Attachments)
+                    {
+                        return HasIModelReference((BCOM.ModelReference)a);
+                    }
                 }
+            }
+            catch (System.Reflection.TargetException te)
+            {
+                ComApp.MessageCenter.AddMessage("Exception on the isIModel call", "The Has IModel code has failed to detect an i-model", BCOM.MsdMessageCenterPriority.Error, false);
             }
             //if it makes it here must not be an imodel
             return false;
