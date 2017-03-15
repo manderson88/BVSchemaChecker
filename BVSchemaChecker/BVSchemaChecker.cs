@@ -17,9 +17,14 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/BVSchemaChecker.cs $
- * $Revision: 2 $
- * $Modtime: 3/06/17 9:38a $
+ * $Revision: 3 $
+ * $Modtime: 3/09/17 11:23a $
  * $History: BVSchemaChecker.cs $
+ * 
+ * *****************  Version 3  *****************
+ * User: Mark.anderson Date: 3/09/17    Time: 11:27a
+ * Updated in $/MDL/BVSchemaChecker
+ * clean up code add try catch on target invoke issue in the imodel check.
  * 
  * *****************  Version 2  *****************
  * User: Mark.anderson Date: 3/06/17    Time: 12:20p
@@ -117,6 +122,11 @@ namespace BVSchemaChecker
         [SRI.DllImport("WPAHelper.dll", EntryPoint = "addWriteToFileHook",
             CharSet = SRI.CharSet.Ansi, CallingConvention = SRI.CallingConvention.Cdecl)]
         internal static extern void mdlWriteToFileHook(int bSilent);
+
+        //this is to catch when a write event happens.
+        [SRI.DllImport("WPAHelper.dll", EntryPoint = "removeWriteToFileHook",
+            CharSet = SRI.CharSet.Ansi, CallingConvention = SRI.CallingConvention.Cdecl)]
+        internal static extern void mdlDropWriteToFileHook();
         /// <summary>
         /// use this to check to see if the application is running as an AS client
         /// not too sure how well it is working.
@@ -194,8 +204,10 @@ namespace BVSchemaChecker
         int bSilent = 0;
         if (s_comApp.ActiveWorkspace.IsConfigurationVariableDefined("BV_SCHEMACHECKER_SILENT"))
             bSilent = int.Parse(s_comApp.ActiveWorkspace.ConfigurationVariableValue("BV_SCHEMACHECKER_SILENT",false));
-        
-        mdlWriteToFileHook(bSilent);
+        //this replaces the call to just turn on the hook. so we only have one
+        //path through this operation.  should possibly use a cfg var at some point.
+        TurnOnWriteHook(true);
+        //mdlWriteToFileHook(bSilent);
             
         //this sets the on close the var must be defined and have a value of 1 to set the close hook
         if ((s_comApp.ActiveWorkspace.IsConfigurationVariableDefined("BV_SCHEMACHECKER_ONCLOSE"))&&
@@ -218,6 +230,36 @@ namespace BVSchemaChecker
         /// <returns>the com app that is the host platform</returns>
         internal static BCOM.Application ComApp{get { return s_comApp; }}
 
+        /// <summary>
+        /// turns off and on the write to file hook.  This is called from the 
+        /// command.
+        /// </summary>
+        /// <param name="onOffStatus">true turns on false turns off</param>
+        public static void TurnOnWriteHook(bool onOffStatus)
+        {
+            int bSilent = 0;
+            if (s_comApp.ActiveWorkspace.IsConfigurationVariableDefined("BV_SCHEMACHECKER_SILENT"))
+                bSilent = int.Parse(s_comApp.ActiveWorkspace.ConfigurationVariableValue("BV_SCHEMACHECKER_SILENT", false));
+            
+            if (true == onOffStatus)
+            {
+                mdlWriteToFileHook(bSilent);
+                
+                ComApp.MessageCenter.AddMessage("write hook enabled", 
+                                                "The Write to file hooks are on", 
+                                                BCOM.MsdMessageCenterPriority.Info, 
+                                                false);
+            }
+            else
+            {
+                mdlDropWriteToFileHook();
+
+                ComApp.MessageCenter.AddMessage("write hook disabled", 
+                                                "The Write to file hooks are off",  
+                                                BCOM.MsdMessageCenterPriority.Info, 
+                                                false);
+            }
+        }
         /// <summary>Closes a connection. Always close the connection before opening a new file.
         /// </summary>
         /// <param name="connection">the connetion to close</param>
@@ -254,7 +296,7 @@ namespace BVSchemaChecker
             connection = repositoryConnectionService.Open(ecSession, ecPluginId, 
                                                           location, null, null);
 
-            System.Diagnostics.Debug.Assert(null != connection);
+            //System.Diagnostics.Debug.Assert(null != connection);
 
             string fsrPlugin = BFSRP.FSRClientHelper.FSRPluginId;
 
@@ -371,6 +413,16 @@ namespace BVSchemaChecker
             return bStatus;
         }
         /// <summary>
+        /// looking at possible solution for a MIA file
+        /// </summary>
+        /// <param name="pModel"></param>
+        /// <returns></returns>
+        bool findFile(BCOM.ModelReference pModel)
+        {
+            string filePath = pModel.DesignFile.FullName;
+            return File.Exists(filePath);
+        }
+        /// <summary>
         /// checks to see if there is an imodel.
         /// </summary>
         /// <param name="pModel"></param>
@@ -386,8 +438,10 @@ namespace BVSchemaChecker
 
                 foreach (BCOM.Attachment oAttachment in pModel.Attachments)
                 {
+                    BCOM.ModelReference rModel = (BCOM.ModelReference)oAttachment;
+
                     if (!oAttachment.IsMissingFile)
-                        if (1 == IsIModel(oAttachment.MdlModelRefP()))
+                        if (1 == IsIModel(rModel.MdlModelRefP()))
                             return true;
 
                     foreach (BCOM.Attachment a in oAttachment.Attachments)
@@ -400,6 +454,7 @@ namespace BVSchemaChecker
             {
                 ComApp.MessageCenter.AddMessage("Exception on the isIModel call", "The Has IModel code has failed to detect an i-model", BCOM.MsdMessageCenterPriority.Error, false);
             }
+           
             //if it makes it here must not be an imodel
             return false;
         }

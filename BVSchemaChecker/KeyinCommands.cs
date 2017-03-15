@@ -370,14 +370,40 @@ internal class KeyinCommands
     {
         Events.SetEventHandlers();
     }
+    /// <summary>
+    /// this will remove the on close check process
+    /// </summary>
+    /// <param name="unparsed"></param>
     public static void RemoveEventHandler(string unparsed)
     {
         Events.RemoveEventHandlers();
     }
+    /// <summary>
+    /// a command to show the version information.  this is to allow us to know
+    /// which copy of the application is in use.
+    /// </summary>
+    /// <param name="unparsed"></param>
     public static void About(string unparsed)
     {
         AboutForm aform = new AboutForm(BVSchemaChecker.MyAddin);
         aform.ShowDialog();
+    }
+    /// <summary>
+    /// a command to allow the user to turn off and on the write to file hook.
+    /// added per request to avoid potential conflict with some existing process.
+    /// </summary>
+    /// <param name="unparsed"></param>
+    public static void ToggleWriteHook(string unparsed)
+    {
+        if (unparsed.Length == 0)
+        {
+            BVSchemaChecker.ComApp.MessageCenter.AddMessage("Requires On or Off", "To toggle the write to file filter use BVSchemaChecker Toggle On or Off", BCOM.MsdMessageCenterPriority.Info, true);
+            return;
+        }
+        if (unparsed.ToUpper().Equals("ON"))
+            BVSchemaChecker.TurnOnWriteHook(true);
+        else if (unparsed.ToUpper().Equals("OFF"))
+            BVSchemaChecker.TurnOnWriteHook(false);
     }
 }  // End of KeyinCommands
 

@@ -27,6 +27,7 @@
           <Keyword CommandWord="apndWhite"></Keyword>
           <Keyword CommandWord="dumpWhite"></Keyword>
           <Keyword CommandWord="OnClose"></Keyword>
+          <Keyword CommandWord="Toggle"></Keyword>
         <Keyword SubtableRef="HelpOptions" CommandWord="help"><Options Required="true"/></Keyword>
         </KeyinTable>
       
@@ -49,6 +50,9 @@
                     Function="BVSchemaChecker.KeyinCommands.AddToWhiteList"/>
       <KeyinHandler Keyin="BVSchemaChecker dumpWhite"
                     Function="BVSchemaChecker.KeyinCommands.DumpWhiteList"/>
+      
+      <KeyinHandler Keyin="BVSchemaChecker Toggle"
+                    Function="BVSchemaChecker.KeyinCommands.ToggleWriteHook"/>
       
       <KeyinHandler Keyin="BVSchemaChecker OnClose"
                     Function="BVSchemaChecker.KeyinCommands.AddEventHandler"/>

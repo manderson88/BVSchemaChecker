@@ -59,7 +59,7 @@ namespace BVSchemaChecker
         public AboutForm(Bentley.MicroStation.AddIn host)
         {
             InitializeComponent();
-            lblAbout.Text = "Black && Veatch Schema Checker Tool\r\nversion 2.3.3 March-06-2017\r\n\r\n Released";
+            lblAbout.Text = "Black && Veatch Schema Checker Tool\r\nversion 2.3.4 March-06-2017\r\n\r\n Released";
         }
     }
 }
