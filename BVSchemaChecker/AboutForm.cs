@@ -17,9 +17,15 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/AboutForm.cs $
- * $Revision: 2 $
- * $Modtime: 3/06/17 9:55a $
+ * $Revision: 3 $
+ * $Modtime: 3/15/17 11:52a $
  * $History: AboutForm.cs $
+ * 
+ * *****************  Version 3  *****************
+ * User: Mark.anderson Date: 3/15/17    Time: 12:43p
+ * Updated in $/MDL/BVSchemaChecker
+ * updating the command for toggling the write to file hook.  fixing up
+ * the imodel detection and updating the comments.
  * 
  * *****************  Version 2  *****************
  * User: Mark.anderson Date: 3/06/17    Time: 12:18p
@@ -41,8 +47,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-
-//updated version number.
 namespace BVSchemaChecker
 {
     /// <summary>

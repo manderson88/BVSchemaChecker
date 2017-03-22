@@ -21,19 +21,20 @@
     <SubKeyinTables>
         <!--CellUtility subtable-->
         <KeyinTable ID="BVSchemaChecker">
-            <Keyword CommandWord="Check"> </Keyword>
-            <Keyword CommandWord="Traverse"> </Keyword>
-            <Keyword CommandWord="Selector"></Keyword>
+          <Keyword CommandWord="Check"> </Keyword>
+          <Keyword CommandWord="Traverse"> </Keyword>
+          <Keyword CommandWord="Selector"></Keyword>
           <Keyword CommandWord="apndWhite"></Keyword>
           <Keyword CommandWord="dumpWhite"></Keyword>
           <Keyword CommandWord="OnClose"></Keyword>
           <Keyword CommandWord="Toggle"></Keyword>
-        <Keyword SubtableRef="HelpOptions" CommandWord="help"><Options Required="true"/></Keyword>
+          <Keyword SubtableRef="HelpOptions" CommandWord="help"><Options Required="true"/></Keyword>
         </KeyinTable>
       
-  <KeyinTable ID="HelpOptions">
-    <Keyword CommandWord="About"></Keyword>
-  </KeyinTable>
+    <KeyinTable ID="HelpOptions">
+       <Keyword CommandWord="About"></Keyword>
+    </KeyinTable>
+    
     </SubKeyinTables>
 
     <!--Define a mapping from key-in to the method that handles the key-in.-->
@@ -41,23 +42,27 @@
         <KeyinHandler Keyin="BVSchemaChecker Check" 
             Function="BVSchemaChecker.KeyinCommands.BVSchemaCheckerCommand"/>
       
-       <KeyinHandler Keyin="BVSchemaChecker TRAVERSE"
+        <KeyinHandler Keyin="BVSchemaChecker TRAVERSE"
                   Function="BVSchemaChecker.KeyinCommands.BVSchemaCheckerTraverseRepository"/>
-      <KeyinHandler Keyin="BVSchemaChecker SELECTOR"
+        
+        <KeyinHandler Keyin="BVSchemaChecker SELECTOR"
                     Function="BVSchemaChecker.KeyinCommands.BVSchemaCheckerProjectControl"/>
       
-      <KeyinHandler Keyin="BVSchemaChecker apndWhite"
+        <KeyinHandler Keyin="BVSchemaChecker apndWhite"
                     Function="BVSchemaChecker.KeyinCommands.AddToWhiteList"/>
-      <KeyinHandler Keyin="BVSchemaChecker dumpWhite"
+        
+        <KeyinHandler Keyin="BVSchemaChecker dumpWhite"
                     Function="BVSchemaChecker.KeyinCommands.DumpWhiteList"/>
       
-      <KeyinHandler Keyin="BVSchemaChecker Toggle"
+        <KeyinHandler Keyin="BVSchemaChecker Toggle"
                     Function="BVSchemaChecker.KeyinCommands.ToggleWriteHook"/>
       
-      <KeyinHandler Keyin="BVSchemaChecker OnClose"
+        <KeyinHandler Keyin="BVSchemaChecker OnClose"
                     Function="BVSchemaChecker.KeyinCommands.AddEventHandler"/>
-    <KeyinHandler Keyin="BVSchemaChecker Help About"
+        
+       <KeyinHandler Keyin="BVSchemaChecker Help About"
                   Function="BVSchemaChecker.KeyinCommands.About"/>
+       
     </KeyinHandlers>
 
 

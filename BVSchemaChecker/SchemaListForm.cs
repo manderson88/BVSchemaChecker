@@ -42,22 +42,22 @@ namespace BVSchemaChecker
     /// <summary>
     /// This is the form that displays the schema in the file.
     /// </summary>
-    public partial class SchemaListForm :
+   public partial class SchemaListForm :
 #if ADDIN
       Bentley.MicroStation.WinForms.Adapter
 #else
       Form
 #endif
-    {
+   {
        
-        public SchemaListForm()
-        {
-            InitializeComponent();
-        }
-        public void SetSchemaNames(List<string> values)
-        {
-            foreach (string name in values)
-                lstBxSchemas.Items.Add(name);
-        }
-    }
+      public SchemaListForm()
+      {
+         InitializeComponent();
+      }
+      public void SetSchemaNames(List<string> values)
+      {
+         foreach (string name in values)
+            lstBxSchemas.Items.Add(name);
+      }
+   }
 }
