@@ -17,9 +17,19 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/SchemaUtilityForm.cs $
- * $Revision: 2 $
- * $Modtime: 2/28/17 7:58a $
+ * $Revision: 4 $
+ * $Modtime: 3/29/17 10:06a $
  * $History: SchemaUtilityForm.cs $
+ * 
+ * *****************  Version 4  *****************
+ * User: Mark.anderson Date: 3/29/17    Time: 10:18a
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the documentation per WPR review.
+ * 
+ * *****************  Version 3  *****************
+ * User: Mark.anderson Date: 3/22/17    Time: 4:08p
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the format and documentation 
  * 
  * *****************  Version 2  *****************
  * User: Mark.anderson Date: 3/06/17    Time: 12:20p
@@ -53,10 +63,12 @@ using PWAPI = PwApiWrapper;
 
 namespace BVSchemaChecker
 {
+/*-----------------------------------------------------------------------------*/
    /// <summary>
    /// the form to show.  This form allows the user to set a base for the sub
    /// selection.  The user can then select sub folders to process.
    /// </summary>
+/*-----------------------------------------------------------------------------*/
    public partial class SchemaUtilityForm : 
 #if ADDIN
    Bentley.MicroStation.WinForms.Adapter
@@ -114,19 +126,25 @@ namespace BVSchemaChecker
          }
 #endif
       }
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// set the message string at the base of the dialog.
       /// </summary>
       /// <param name="msg">The message to display at the bottom of the dialog.</param>
+/*-----------------------------------------------------------------------------*/
       public void SetMessage(string msg)
       {
          lblMessages.Text = msg;
       }
+     
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// The button to set the root project.
       /// </summary>
       /// <param name="sender">the sending application</param>
       /// <param name="e">the args for the button event.</param>
+/*-----------------------------------------------------------------------------*/
       private void btnRoot_Click(object sender, EventArgs e)
       {
          //open the pwexplorer and select the root.
@@ -144,11 +162,14 @@ namespace BVSchemaChecker
             txtRootDir.Text = strName;
          }
       }
+      
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// the button to set the sub folder.
       /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="e"></param>
+      /// <param name="sender">the object that generated the event.</param>
+      /// <param name="e">the parameters for the event.</param>
+/*-----------------------------------------------------------------------------*/
       private void btnSelectFolder_Click(object sender, EventArgs e)
       {
          int iFolderID;
@@ -165,13 +186,16 @@ namespace BVSchemaChecker
          source.Add(lbEntry);
          dgvDirs.Update();
       }
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// the button for starting the processing of one or more selected folders.
       /// sends the project id, a flag to process all the models in each file
       /// Silently sends a flag to turn off the message box
       /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="e"></param>
+      /// <param name="sender">the object that initiated the event.</param>
+      /// <param name="e">the parameters for the event.</param>
+/*-----------------------------------------------------------------------------*/
       private void btnRun_Click(object sender, EventArgs e)
       {
             
@@ -193,11 +217,15 @@ namespace BVSchemaChecker
          }
       }
     }
+
+/*-----------------------------------------------------------------------------*/
     /// <summary>
     /// a class to allow the data grid view to have a collection 
     /// </summary>
-    public class ListBoxEntry
+/*-----------------------------------------------------------------------------*/
+   public class ListBoxEntry
     {
+        //a flag to process a file.
         public bool processFile { get; set; }
         /// <summary>
         /// the name for the item

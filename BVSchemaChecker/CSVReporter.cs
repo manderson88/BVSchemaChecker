@@ -17,9 +17,14 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/CSVReporter.cs $
- * $Revision: 2 $
- * $Modtime: 3/06/17 10:01a $
+ * $Revision: 3 $
+ * $Modtime: 3/29/17 9:49a $
  * $History: CSVReporter.cs $
+ * 
+ * *****************  Version 3  *****************
+ * User: Mark.anderson Date: 3/29/17    Time: 10:18a
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the documentation per WPR review.
  * 
  * *****************  Version 2  *****************
  * User: Mark.anderson Date: 3/06/17    Time: 12:20p
@@ -42,18 +47,25 @@ using System.IO;
 
 namespace BVSchemaChecker
 {
+/*-----------------------------------------------------------------------------*/
     /// <summary>
-    /// A class to handle the report writing.
+    /// A class to handle the report writing to the CSV file format.
     /// </summary>
-    static class CSVReporter
+/*-----------------------------------------------------------------------------*/
+   static class CSVReporter
     {
+      //the stream to write to.
         static System.IO.StreamWriter strWriter;
-        public static string FileName { get; set; } 
+      //the file name that is written.
+        public static string FileName { get; set; }
+
+/*-----------------------------------------------------------------------------*/
         /// <summary>
         /// Creates the report file.  The location is based on the cfg var
         /// BV_SCHEMACHECKER_OUT or if that is not set then MS_TMP.  
         /// </summary>
         /// <param name="fileName">The name for the report file</param>
+/*-----------------------------------------------------------------------------*/
         public static void CreateReport(string _fileName) // use uStation API to get the uStation temp directory
         {
             bool bOverrideOutput;
@@ -81,6 +93,7 @@ namespace BVSchemaChecker
             }
         }
 
+/*-----------------------------------------------------------------------------*/
         /// <summary>
         /// Write an entry in the report file.
         /// The format is
@@ -91,6 +104,7 @@ namespace BVSchemaChecker
         /// <param name="strModelName">The model being processed.</param>
         /// <param name="strSchemaInfo">The schema that is found.</param>
         /// <param name="bPassFail">wether to put in a PASS or FAIL message.</param>
+/*-----------------------------------------------------------------------------*/
         public static void writeLine(string strPWStore, string strFileName, 
                 string strModelName, string strSchemaInfo, bool bPassFail = true)
         {
@@ -107,15 +121,16 @@ namespace BVSchemaChecker
                     DateTime.Now.ToLongTimeString()));
 
         }
-       
+
+/*-----------------------------------------------------------------------------*/
         /// <summary>
         /// close the file
         /// </summary>
+/*-----------------------------------------------------------------------------*/
         public static void close()
         {
             strWriter.Close();
             strWriter = null;
         }
-
     }
 }

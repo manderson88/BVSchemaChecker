@@ -17,9 +17,14 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/AboutForm.cs $
- * $Revision: 3 $
- * $Modtime: 3/15/17 11:52a $
+ * $Revision: 4 $
+ * $Modtime: 3/22/17 4:05p $
  * $History: AboutForm.cs $
+ * 
+ * *****************  Version 4  *****************
+ * User: Mark.anderson Date: 3/22/17    Time: 4:08p
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the format and documentation 
  * 
  * *****************  Version 3  *****************
  * User: Mark.anderson Date: 3/15/17    Time: 12:43p
@@ -60,10 +65,10 @@ namespace BVSchemaChecker
       Form
 #endif
     {
-        public AboutForm(Bentley.MicroStation.AddIn host)
-        {
+      public AboutForm(Bentley.MicroStation.AddIn host)
+         {
             InitializeComponent();
             lblAbout.Text = "Black && Veatch Schema Checker Tool\r\nversion 2.3.4 March-06-2017\r\n\r\n Released";
-        }
+         }
     }
 }

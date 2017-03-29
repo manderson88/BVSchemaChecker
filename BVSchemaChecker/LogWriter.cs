@@ -17,9 +17,14 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/LogWriter.cs $
- * $Revision: 1 $
- * $Modtime: 2/09/17 7:35a $
+ * $Revision: 2 $
+ * $Modtime: 3/29/17 9:55a $
  * $History: LogWriter.cs $
+ * 
+ * *****************  Version 2  *****************
+ * User: Mark.anderson Date: 3/29/17    Time: 10:18a
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the documentation per WPR review.
  * 
  * *****************  Version 1  *****************
  * User: Mark.anderson Date: 2/24/17    Time: 9:24a
@@ -36,17 +41,24 @@ using System.IO;
 
 namespace BVSchemaChecker
 {
+/*-----------------------------------------------------------------------------*/
     /// <summary>
     /// A class to handle logging the application messages.
     /// </summary>
+/*-----------------------------------------------------------------------------*/
    public static class LogWriter
    {
+      //the file stream to write to.
       static System.IO.StreamWriter strWriter;
+      //the file name that is being written to.
       static string s_fileName;
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// Create the log file in the MS_TMP directory.
       /// </summary>
       /// <param name="fileName">The name of the log file.</param>
+/*-----------------------------------------------------------------------------*/
       public static void CreateLog(string fileName) // use uStation API to get the uStation temp directory
       {
          string filePath = BVSchemaChecker.ComApp.ActiveWorkspace.ExpandConfigurationVariable("$(MS_TMP)");
@@ -60,11 +72,13 @@ namespace BVSchemaChecker
          s_fileName = filePath+fileName;
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// write an entry into the log file.  optionally the time stamp can be suppressed.
       /// </summary>
-      /// <param name="msg"></param>
-      /// <param name="bStamp"></param>
+      /// <param name="msg">the message to write to the file</param>
+      /// <param name="bStamp">true - add the time stamp to the line</param>
+/*-----------------------------------------------------------------------------*/
       public static void writeLine(string msg, bool bStamp = true)
       {
         //see if there is a strWriter if not then create it again.
@@ -76,9 +90,11 @@ namespace BVSchemaChecker
          strWriter.WriteLine(msg);
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// close the log file with one final message.
       /// </summary>
+/*-----------------------------------------------------------------------------*/
       public static void close()
       {
          strWriter.WriteLine("Closed: {0} {1}", DateTime.Now.ToLongDateString(), 

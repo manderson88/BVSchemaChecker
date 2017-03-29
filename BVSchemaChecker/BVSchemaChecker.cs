@@ -17,9 +17,19 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/BVSchemaChecker.cs $
- * $Revision: 4 $
- * $Modtime: 3/15/17 11:06a $
+ * $Revision: 6 $
+ * $Modtime: 3/29/17 9:45a $
  * $History: BVSchemaChecker.cs $
+ * 
+ * *****************  Version 6  *****************
+ * User: Mark.anderson Date: 3/29/17    Time: 10:17a
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the documentation per WPR review.
+ * 
+ * *****************  Version 5  *****************
+ * User: Mark.anderson Date: 3/22/17    Time: 4:08p
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the format and documentation 
  * 
  * *****************  Version 4  *****************
  * User: Mark.anderson Date: 3/15/17    Time: 12:43p
@@ -77,6 +87,7 @@ using System.Diagnostics;
 
 namespace BVSchemaChecker
 {
+/*-----------------------------------------------------------------------------*/
 /// <summary>This class subclasses the Bentley.MicroStation.AddIn class.  The 
 /// AddIn class is a managed implementation of the MDL application. The BVSchemaChecker
 /// class provides the base functionality.  It processes the models checks for 
@@ -86,6 +97,7 @@ namespace BVSchemaChecker
 /// host dgn file.
 /// When loading an AddIn MicroStation looks for a class
 /// derived from AddIn.</summary>
+/*-----------------------------------------------------------------------------*/
    [Bentley.MicroStation.AddInAttribute(MdlTaskID="BVSchemaChecker", 
                                        KeyinTree="BVSchemaChecker.commands.xml")]
    internal sealed class BVSchemaChecker : Bentley.MicroStation.AddIn
@@ -104,30 +116,44 @@ namespace BVSchemaChecker
                                                      IntPtr newEdP, 
                                                      IntPtr oldEdP, 
                                                      IntPtr replacementEdP);
+
+/*-----------------------------------------------------------------------------*/      
+      /// <summary>
+      /// returns the element type number.  It is a managed call wrapper around
+      /// the native code function call elementRef_getType
+      /// </summary>
+      /// <param name="elRef"></param>
+      /// <returns></returns>
+/*-----------------------------------------------------------------------------*/
       [SRI.DllImport("stdmdlbltin.dll", EntryPoint = "elementRef_getType",
       CharSet = SRI.CharSet.Ansi,
       CallingConvention = SRI.CallingConvention.StdCall)]
       internal static extern int elementRef_getType(long elRef);
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// this is for a write to file event
       /// </summary>
       /// <param name="functionType"></param>
       /// <param name="eventDelegate"></param>
       /// <returns></returns>
+/*-----------------------------------------------------------------------------*/
       [SRI.DllImport("USTATION.DLL", EntryPoint = "mdlSystem_setFunction",
                   CallingConvention = SRI.CallingConvention.Cdecl)]
       internal static extern System.IntPtr mdlSystem_setElementWriteToFileFunction(
                      int functionType, HandleElementWriteEvent eventDelegate);
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// this gets the current mdl descriptor for the callbacks
       /// </summary>
       /// <returns></returns>
+/*-----------------------------------------------------------------------------*/
       [SRI.DllImport("USTATION.DLL", CharSet = SRI.CharSet.Ansi,
                   CallingConvention = SRI.CallingConvention.Cdecl)]
       internal static extern System.IntPtr mdlSystem_getCurrMdlDesc();
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// a wrapper for the MDL function to load reference models.  added for 
       /// the work file functionality.  See the MDL Function Reference for complete 
@@ -137,43 +163,52 @@ namespace BVSchemaChecker
       /// <param name="loadCache">to force the loading of element cache</param>
       /// <param name="loadRaster">to force the loading of raster reference files</param>
       /// <param name="loadUndisp">to force the loading of non displayed information</param>
+/*-----------------------------------------------------------------------------*/
       [SRI.DllImport("USTATION.DLL", EntryPoint = "mdlModelRef_loadReferenceModels",
          CharSet= SRI.CharSet.Ansi,
          CallingConvention = SRI.CallingConvention.Cdecl)]
       internal static extern void mdlModelRef_loadReferenceModels(
          int pModel, int loadCache, int loadRaster, int loadUndisp);
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// this is added to catch write to file events.  It is a native code call
       /// to use the ElementAgenda class.  Important note is that the WPAHelper
       /// application needs to be compiled in VisualStudio 2005 only!!! 
       /// </summary>
       /// <param name="bSilent"></param>
+/*-----------------------------------------------------------------------------*/
       [SRI.DllImport("WPAHelper.dll", EntryPoint = "addWriteToFileHook",
          CharSet = SRI.CharSet.Ansi, CallingConvention = SRI.CallingConvention.Cdecl)]
       internal static extern void mdlWriteToFileHook(int bSilent);
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// Removes the write to file hook. 
       /// </summary>
+/*-----------------------------------------------------------------------------*/
       [SRI.DllImport("WPAHelper.dll", EntryPoint = "removeWriteToFileHook",
          CharSet = SRI.CharSet.Ansi, CallingConvention = SRI.CallingConvention.Cdecl)]
       internal static extern void mdlDropWriteToFileHook();
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// use this to check to see if the application is running as an AutomationService client
       /// not too sure how well it is working.
       /// </summary>
       /// <returns></returns>
+/*-----------------------------------------------------------------------------*/
       [SRI.DllImport("USTATION.DLL", EntryPoint = "mdlSystem_startedAsAutomationServer",
          CallingConvention = SRI.CallingConvention.Cdecl, CharSet = SRI.CharSet.Ansi)]
       internal static extern int mdlSystem_startedAsAutomationServer();
- 
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// tells if the model is an imodel. 1 it is 0 it is not.
       /// </summary>
       /// <param name="pModel"></param>
       /// <returns>1 for imodel 0 for  regular</returns>
+/*-----------------------------------------------------------------------------*/
       [SRI.DllImport("WPAHelper.dll", EntryPoint = "isIModel",
             CharSet = SRI.CharSet.Ansi,
          CallingConvention = SRI.CallingConvention.Cdecl)]
@@ -205,26 +240,31 @@ namespace BVSchemaChecker
       //running the traverse command set by the keyin command.
       public static  bool                       s_runningTraverse { get; set; }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>Private constructor required for all AddIn classes derived from 
       /// Bentley.MicroStation.AddIn.
       /// </summary>
       /// <param name="mdlDesc">a pointer to the mdl app behind the addin</param>
-      private         BVSchemaChecker(System.IntPtr mdlDesc) : base (mdlDesc)
+/*-----------------------------------------------------------------------------*/
+      private BVSchemaChecker(System.IntPtr mdlDesc)
+         : base(mdlDesc)
       {
          s_addin = this;
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>The AddIn loader creates an instance of a class 
       /// derived from Bentley.MicroStation.AddIn and invokes Run.
       /// </summary>
       /// <param name="commandLine">arguments sent in with the mdl load command
       /// </param>
+/*-----------------------------------------------------------------------------*/
       protected override int Run(System.String[] commandLine)
       {
          s_comApp = BMI.Utilities.ComApp;
-         s_bIsOPM = ((s_comApp.Name.CompareTo("OpenPlantModeler")==0)||(s_comApp.Name.CompareTo("BRCM") == 0));
-         s_bIsUSTN = ((s_comApp.Name.CompareTo("ustation") == 0)||
-            (s_comApp.Name.CompareTo("AECOsimBuildingDesigner")==0));
+         s_bIsOPM = (s_comApp.Name.CompareTo("OpenPlantModeler")==0||s_comApp.Name.CompareTo("BRCM") == 0);
+         s_bIsUSTN = (s_comApp.Name.CompareTo("ustation") == 0||
+            s_comApp.Name.CompareTo("AECOsimBuildingDesigner")==0);
          
          s_comApp.CadInputQueue.SendKeyin("mdl load wpahelper");
          s_whiteList = new List<string>();
@@ -260,30 +300,37 @@ namespace BVSchemaChecker
          //mdlWriteToFileHook(bSilent);
             
          //this sets the on close the var must be defined and have a value of 1 to set the close hook
-         if ((s_comApp.ActiveWorkspace.IsConfigurationVariableDefined("BV_SCHEMACHECKER_ONCLOSE"))&&
-            (1==int.Parse(s_comApp.ActiveWorkspace.ConfigurationVariableValue("BV_SCHEMACHECKER_ONCLOSE",false))))
+         if (s_comApp.ActiveWorkspace.IsConfigurationVariableDefined("BV_SCHEMACHECKER_ONCLOSE")&&
+            1==int.Parse(s_comApp.ActiveWorkspace.ConfigurationVariableValue("BV_SCHEMACHECKER_ONCLOSE",false)))
                Events.SetEventHandlers();
 
          return 0;
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>Static property that the rest of the application uses 
       /// to get the reference to the AddIn.
       /// </summary>
       /// <returns>a reference to the AddIn subclass</returns>
-      internal static BVSchemaChecker MyAddin{get { return s_addin; }}
+/*-----------------------------------------------------------------------------*/
+      internal static BVSchemaChecker MyAddin { get { return s_addin; } }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>Static property that the rest of the application uses to
       /// get the reference to the COM object model's main application object.
       /// </summary>
       /// <returns>the com app that is the host platform</returns>
-      internal static BCOM.Application ComApp{get { return s_comApp; }}
+/*-----------------------------------------------------------------------------*/
+      internal static BCOM.Application ComApp { get { return s_comApp; } }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
-      /// turns off and on the write to file hook.  This is called from the 
-      /// command.
+      /// turns off and on the write to file hook.  This is used to block the write
+      /// to file operations.  This is called from the 
+      /// command.  "BVSCHEMACHECKER TOGGLE ON/OFF
       /// </summary>
       /// <param name="onOffStatus">true turns on false turns off</param>
+/*-----------------------------------------------------------------------------*/
       public static void TurnOnWriteHook(bool onOffStatus)
       {
          int bSilent = 0;
@@ -309,10 +356,12 @@ namespace BVSchemaChecker
                                           false);
          }
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>Closes a connection. Always close the connection before opening a new file.
       /// </summary>
       /// <param name="connection">the connetion to close</param>
+/*-----------------------------------------------------------------------------*/
       public static void CloseConnection(ECSR.RepositoryConnection connection)
       {
          ECSR.RepositoryConnectionService repositoryConnectionService;
@@ -320,11 +369,13 @@ namespace BVSchemaChecker
          repositoryConnectionService.Close(connection,null);
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// open an EC connection to the  current file.
       /// </summary>
       /// <param name="ecSession">the EC session reference</param>
       /// <returns>RepositoryConnection</returns>
+/*-----------------------------------------------------------------------------*/
       public static ECSR.RepositoryConnection OpenConnectionToActiveModel(ECSS.ECSession ecSession)
       {
          ECSR.RepositoryConnectionService repositoryConnectionService;
@@ -350,13 +401,15 @@ namespace BVSchemaChecker
 
          return connection;
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// open a connection to a model does not have to be the active model
       /// </summary>
       /// <param name="oModel">the model that is being used as repository</param>
       /// <param name="ecSession">the session</param>
       /// <returns></returns>
+/*-----------------------------------------------------------------------------*/
       public static ECSR.RepositoryConnection OpenConnectionToModel(
                            BCOM.ModelReference oModel, ECSS.ECSession ecSession)
       {
@@ -383,13 +436,15 @@ namespace BVSchemaChecker
 
          return connection;
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// sees if the schema name is on a white list.
       /// the white list is set by the cfg var BV_SCHEMA_WHITELIST.
       /// </summary>
       /// <param name="schemaName">the name(without the version information) of a schema to check</param>
       /// <returns>true the item is on the white list.</returns>
+/*-----------------------------------------------------------------------------*/
       private static bool IsOnWhiteList(string schemaName)
       {
          foreach (string whiteSchema in s_whiteList)
@@ -398,96 +453,108 @@ namespace BVSchemaChecker
 
          return false;
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// if the  application is being run in OpenPlant Modeler the OpenPlant
       /// and OpenPlant3D schema are always present.  so  skip them.
       /// </summary>
       /// <param name="schemaNames">The list of schema found in the file.</param>
       /// <returns>true the item is an OpenPlant base schema</returns>
-      private static bool IsOPMBaseSchema(string [] schemaNames)
+/*-----------------------------------------------------------------------------*/
+      private static bool IsOPMBaseSchema(string[] schemaNames)
       {
          bool bStatus = false;
          if(s_bIsOPM)
          foreach(string name in schemaNames)
-            if ((name.CompareTo("OpenPlant.01.06")==0)||
-               (name.CompareTo("OpenPlant_3D.01.06")==0))
+            if (name.CompareTo("OpenPlant.01.06")==0||
+                name.CompareTo("OpenPlant_3D.01.06")==0)
                   bStatus = true;
 
          return bStatus;
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// checks for  the  building group schemas that are added
       /// </summary>
       /// <param name="schemaNames">the schema to check</param>
       /// <returns>true the item is in the base set that are used in ABD</returns>
-      private static bool IsABDBaseSchema(string  name)
+/*-----------------------------------------------------------------------------*/
+      private static bool IsABDBaseSchema(string name)
       {
          bool bStatus = false;
          if (s_comApp.Name=="AECOsimBuildingDesigner")
-            if((name=="Bentley_SpacePlanner_LocationLinkings")||
-               (name=="StructuralModelingComponents")||
-                  (name=="BuildingDataGroup"))
+            if(name=="Bentley_SpacePlanner_LocationLinkings"||
+               name=="StructuralModelingComponents"||
+                  name=="BuildingDataGroup")
                   bStatus = true;
          return bStatus;
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// if the schema is one of the OPM base items.
       /// </summary>
       /// <param name="name">the schema to check</param>
       /// <returns>true if the schema is part of the OPM base set.</returns>
+/*-----------------------------------------------------------------------------*/
       private static bool IsOPMSchema(string name)
       {
          bool bStatus = false;
          if (s_comApp.Name == "OpenPlantModeler")
-            if ((name == "OpenPlant") ||
-               (name == "OpenPlant_3D")||
-               (name== "StructuralModelingComponents"))
+            if (name == "OpenPlant" ||
+                name == "OpenPlant_3D"||
+                name== "StructuralModelingComponents")
                   bStatus = true;
 
          return bStatus;
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// check  for  brcm schema
       /// </summary>
       /// <param name="name">the schema to check</param>
       /// <returns>true the item is in teh BRCM base list.</returns>
+/*-----------------------------------------------------------------------------*/
       private static bool IsBRCMSchema(string name)
       {
          bool bStatus = false;
          if (s_comApp.Name == "BRCM")
-            if ((name == "Electrical_RCM"))
+            if (name == "Electrical_RCM")
                bStatus = true;
 
          return bStatus;
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// looking at possible solution for a MIA file problem.  uses the File 
       /// api to see if the file exists.
       /// </summary>
       /// <param name="pModel">the model to check</param>
       /// <returns>true the file is on the drive</returns>
+/*-----------------------------------------------------------------------------*/
       bool findFile(BCOM.ModelReference pModel)
       {
          string filePath = pModel.DesignFile.FullName;
          return File.Exists(filePath);
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// checks to see if there is an imodel.
       /// </summary>
       /// <param name="pModel">the root model to search for references</param>
       /// <returns>true the model has an i-model referenced in.</returns>
+/*-----------------------------------------------------------------------------*/
       public static bool HasIModelReference(BCOM.ModelReference pModel)
       {
          try
          {
-            if ((!pModel.IsAttachment) || 
-               ((pModel.IsAttachment) && (!pModel.AsAttachment.IsMissingFile)))
+            if (!pModel.IsAttachment || 
+               (pModel.IsAttachment && !pModel.AsAttachment.IsMissingFile))
                   if (1 == IsIModel(pModel.MdlModelRefP()))
                      return true;
 
@@ -516,14 +583,16 @@ namespace BVSchemaChecker
          return false;
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// checks the active model
       /// does simple walk of  the  dgn file to look for schema that are not managed by the plugin.
       /// </summary>
       /// <param name="connection">The connection to  the  active dgn file.</param>
       /// <returns>true if a schema is found in model</returns>
+/*-----------------------------------------------------------------------------*/
       public static bool FindEmbededSchemas(ECSR.RepositoryConnection connection,
-                                             List<string> schemas)
+                                            List<string> schemas)
       {
          bool bStatus = false;
          System.Collections.Generic.IList<ECOS.IECSchema> schemaList;
@@ -582,27 +651,31 @@ namespace BVSchemaChecker
                      //this is a FAILED line
                      if ((s_bIsUSTN) || ((s_bIsOPM) && (((schema.Name.CompareTo("OpenPlant") != 0)
                            && (schema.Name.CompareTo("OpenPlant_3D") != 0)))))
-                           CSVReporter.writeLine(strCurrentProjectName,
-                              BVSchemaChecker.ComApp.ActiveDesignFile.Name,
-                              BVSchemaChecker.ComApp.ActiveModelReference.Name,
-                              fullSchemaName, false);
+                     {
+                        CSVReporter.writeLine(strCurrentProjectName,
+                           BVSchemaChecker.ComApp.ActiveDesignFile.Name,
+                           BVSchemaChecker.ComApp.ActiveModelReference.Name,
+                           fullSchemaName, false);
+                     }
                   }
 
-                  if ((!IsOnWhiteList(schema.Name)) && 
-                     (!IsABDBaseSchema(schema.Name))&&(!IsOPMSchema(schema.Name))&&
-                     (!IsBRCMSchema(schema.Name)))
+                  if (!IsOnWhiteList(schema.Name) && 
+                     !IsABDBaseSchema(schema.Name)&&!IsOPMSchema(schema.Name)&&
+                     !IsBRCMSchema(schema.Name))
                      schemas.Add(fullSchemaName);
                }
          }
          return bStatus;
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// processes a dgn model to see if it has embedded schema
       /// </summary>
       /// <param name="oModel">the model to check</param>
       /// <returns>true that the model was processed and does not have a schema.</returns>
-      public static bool ProcessModel (BCOM.ModelReference oModel)
+/*-----------------------------------------------------------------------------*/
+      public static bool ProcessModel(BCOM.ModelReference oModel)
       {
          List<string> schemaList = new List<string>();
          bool m_debugMode = false;
@@ -661,29 +734,33 @@ namespace BVSchemaChecker
          }
          return bStatus;
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// This tries to remove the reference files so they are not loaded in the process.
       /// </summary>
+/*-----------------------------------------------------------------------------*/
       public static void CleanOffRefFiles()
       {
          BCOM.ModelReference oModel = BVSchemaChecker.ComApp.ActiveModelReference;
          int iAttachmentCount = oModel.Attachments.Count;
          for (int i = iAttachmentCount; i > 0; --i)
          {
-               BCOM.Attachment oAtt = oModel.Attachments[i];
-               oModel.Attachments.Remove(oAtt);
+            BCOM.Attachment oAtt = oModel.Attachments[i];
+            oModel.Attachments.Remove(oAtt);
          }
 
          return;
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// determine if the file is a dgn file.  We only process DGN files
       /// </summary>
       /// <param name="iProjectID">PW Project ID</param>
       /// <param name="iDocID">PW document ID</param>
       /// <returns>true if the file is a DGN</returns>
+/*-----------------------------------------------------------------------------*/
       private static bool ProcessDocument(int iProjectID, int iDocID)
       {
          bool rtnValue = false;
@@ -711,39 +788,40 @@ namespace BVSchemaChecker
          return (dgnExt.CompareTo(".dgn") == 0) && (iModelext <= 0);
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// Processes the contents of a directory.  
       /// Checks out each file and tests for presence of embeded schema
       /// </summary>
       /// <param name="iProjectID">The PW Project ID</param>
+/*-----------------------------------------------------------------------------*/
       public static void BVSchemaCheckerProcessDocuments(int iProjectID)
       {
          int docCount = PWAPI.dmscli.aaApi_SelectDocumentsByProjectId(iProjectID);
 
          if (docCount <= 0)
-               return;
+            return;
 
          //docCount = PWAPI.dmscli.aaApi_GetDocumentCount(iProjectID);
          for (int i = 0; i < docCount; ++i)
          {
-               PWAPI.dmscli.aaApi_SelectDocumentsByProjectId(iProjectID);
-               int did = PWAPI.dmscli.aaApi_GetDocumentId(i);
+            PWAPI.dmscli.aaApi_SelectDocumentsByProjectId(iProjectID);
+            int did = PWAPI.dmscli.aaApi_GetDocumentId(i);
         
                //appidd can be different on different installations... need to make this better.
-               if (ProcessDocument(iProjectID,did))
+            if (ProcessDocument(iProjectID,did))
                {
-
                   StringBuilder sbWorkingFileName = new StringBuilder(512);
                   if (did > 0)
                      if (PWAPI.dmscli.aaApi_CopyOutDocument(iProjectID, did, 
                                                    null, sbWorkingFileName, 512))
                      {
                            //this opens the file
-                           BVSchemaChecker.ComApp.OpenDesignFile(
+                        BVSchemaChecker.ComApp.OpenDesignFile(
                                                    sbWorkingFileName.ToString(), 
                                                    true, BCOM.MsdV7Action.Workmode);
                            //this will  loop through the models in the file
-                           if (!s_processAllModels)
+                        if (!s_processAllModels)
                            {
                               CleanOffRefFiles();
                               KeyinCommands.BVSchemaCheckerCommand("");
@@ -759,25 +837,26 @@ namespace BVSchemaChecker
                                  KeyinCommands.BVSchemaCheckerCommand("");
                               }
 
-                           iFileCount++; //the file has been checked.
-                           PWAPI.dmscli.aaApi_CheckInDocument(iProjectID, did);
+                        iFileCount++; //the file has been checked.
+                        PWAPI.dmscli.aaApi_CheckInDocument(iProjectID, did);
                      }
                      else
                      {
-                           string errMessage = PWAPI.dmsgen.aaApi_GetLastErrorMessage();
-                           string errDetail = PWAPI.dmsgen.aaApi_GetLastErrorDetail();
-                           BVSchemaChecker.ComApp.MessageCenter.AddMessage(
+                        string errMessage = PWAPI.dmsgen.aaApi_GetLastErrorMessage();
+                        string errDetail = PWAPI.dmsgen.aaApi_GetLastErrorDetail();
+                        BVSchemaChecker.ComApp.MessageCenter.AddMessage(
                               errMessage, errDetail, BCOM.MsdMessageCenterPriority.Info, false);
                      }
-               }
+             }
          }
-
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// recursively walks the  project hierarchy
       /// </summary>
       /// <param name="iProjectID">the project to process</param>
+/*-----------------------------------------------------------------------------*/
       public static void BVSchemaCheckerTraverseProject(int iProjectID)
       {
          //need to find a way to check  to make sure it is a dgn file that is better than just the extension...
@@ -800,24 +879,29 @@ namespace BVSchemaChecker
          //PWAPI.dmscli.aaApi_DmsDataBufferFree(HAADMSBUFFER_project);
          PWAPI.dmscli.aaApi_DmsDataBufferFree(HAADMSBUFFER_SubProjects);
       }
-      
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// calls the check method on the close file event.
       /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="eventArgs"></param>
+      /// <param name="sender">the class that originated the event</param>
+      /// <param name="eventArgs">the arguments to the event.  this will be the 
+      /// time (bfore or after)</param>
+/*-----------------------------------------------------------------------------*/
       internal static void BVSchemFileEventHandler(Bentley.MicroStation.AddIn sender, NewDesignFileEventArgs eventArgs)
       {
          if ((eventArgs.WhenCode == NewDesignFileEventArgs.When.BeforeDesignFileClose) && (!s_runningTraverse))
             KeyinCommands.BVSchemaCheckerCommand("FROM_HOOK");
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// called on the element to file event.  
       /// removed in favor of the native hook
       /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="args"></param>
+      /// <param name="sender">The object that caused this event.</param>
+      /// <param name="args">the type of change.</param>
+/*-----------------------------------------------------------------------------*/
       internal static void BVSchemaElementEventHandler(Bentley.MicroStation.AddIn sender, ElementChangedEventArgs args)
       {
       //   Console.WriteLine("Element changed " + args.GetType().ToString());

@@ -18,9 +18,19 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/KeyinCommands.cs $
- * $Revision: 3 $
- * $Modtime: 3/15/17 11:05a $
+ * $Revision: 5 $
+ * $Modtime: 3/29/17 9:45a $
  * $History: KeyinCommands.cs $
+ * 
+ * *****************  Version 5  *****************
+ * User: Mark.anderson Date: 3/29/17    Time: 10:18a
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the documentation per WPR review.
+ * 
+ * *****************  Version 4  *****************
+ * User: Mark.anderson Date: 3/22/17    Time: 4:08p
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the format and documentation 
  * 
  * *****************  Version 3  *****************
  * User: Mark.anderson Date: 3/15/17    Time: 12:44p
@@ -52,10 +62,12 @@ using System.Collections.Generic;
 
 namespace BVSchemaChecker
 {
+/*-----------------------------------------------------------------------------*/
 /// <summary>Class used for running key-ins.  The key-ins
 /// XML file commands.xml provides the class name and the method names.  This
 /// is the user entry point to the functionality.
 /// </summary>
+/*-----------------------------------------------------------------------------*/
    internal sealed class KeyinCommands
    {
    //a global projectwise project id that is being processed.
@@ -69,11 +81,15 @@ namespace BVSchemaChecker
    // a flag to tell that the selector is being used for project selection.
       private static bool m_usesSelector { get; set; }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
-      /// this is used to parse out the keyin string.
+      /// this is used to parse out the keyin string for setting various parameters.
+      /// Multiple commands can used this to extract the parameters that pertain to
+      /// that command.
       /// </summary>
       /// <param name="parsed">the array built from the single string.</param>
       /// <param name="unparsed">the string passed along with the keyin command.</param>
+/*-----------------------------------------------------------------------------*/
       private static void ParseKeyin(string[] parsed, string unparsed)
       {
          string strProjectID;
@@ -112,11 +128,15 @@ namespace BVSchemaChecker
          }
       }
 
+/*-----------------------------------------------------------------------------*/
    /// <summary>
    /// the keyin entry point to select which project/files to process based on 
    /// a user form.
    /// </summary>
-   /// <param name="unparsed">command line args to signal silent, and debug modes.</param>
+   /// <param name="unparsed">command line args to signal silent(-s:), debug modes(-d:)
+   /// project(-p:) and all models(-m:).  This is hidden behind a user interface 
+   /// button.</param>
+/*-----------------------------------------------------------------------------*/
       public static void BVSchemaCheckerProjectControl(System.String unparsed)
       {
          string[] parsed = null;
@@ -203,6 +223,8 @@ namespace BVSchemaChecker
 
          BVSchemaChecker.s_runningTraverse = false;
       }
+
+/*-----------------------------------------------------------------------------*/
    /// <summary>
    /// The command to process the active file.  It will attempt to create a session
    /// and open the connection to the active model.  
@@ -210,6 +232,7 @@ namespace BVSchemaChecker
    /// The findEmbeded method to look at the file for embedded schemas
    /// </summary>
    /// <param name="unparsed">not used.</param>
+/*-----------------------------------------------------------------------------*/
       public static void BVSchemaCheckerCommand(System.String unparsed)
       {
          string errMessage = "ERROR";
@@ -324,11 +347,15 @@ namespace BVSchemaChecker
             CSVReporter.close();
          }
 
-      } 
+      }
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// a command to append more entries to the whitelist.
       /// </summary>
-      /// <param name="unparsed"></param>
+      /// <param name="unparsed">the schema name to add to the list.  should be 
+      /// in the form of the complete name with version number</param>
+/*-----------------------------------------------------------------------------*/
       public static void AddToWhiteList(string unparsed)
       {
          string whiteListAddition="";
@@ -353,11 +380,14 @@ namespace BVSchemaChecker
          //this will update the list for this user.
          BVSchemaChecker.ComApp.ActiveWorkspace.AddConfigurationVariable("BV_SCHEMA_WHITELIST", fullList.ToString(), true);
       }
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// dump the white list to the schema form.   This is more a diagnostic but 
       /// will be in the api.
       /// </summary>
-      /// <param name="unparsed"></param>
+      /// <param name="unparsed">unused</param>
+/*-----------------------------------------------------------------------------*/
       public static void DumpWhiteList(string unparsed)
       {
          string whiteList;
@@ -381,38 +411,50 @@ namespace BVSchemaChecker
          }
       }
 
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// Add the on close event handler
       /// this is available to allow the config to be set to not check for AS
       /// </summary>
-      /// <param name="unparsed"></param>
+      /// <param name="unparsed">un used.</param>
+/*-----------------------------------------------------------------------------*/
       public static void AddEventHandler(string unparsed)
       {
          Events.SetEventHandlers();
       }
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// this will remove the on close check process
       /// </summary>
-      /// <param name="unparsed"></param>
+      /// <param name="unparsed">unused.</param>
+/*-----------------------------------------------------------------------------*/
       public static void RemoveEventHandler(string unparsed)
       {
          Events.RemoveEventHandlers();
       }
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// a command to show the version information.  this is to allow us to know
       /// which copy of the application is in use.
       /// </summary>
-      /// <param name="unparsed"></param>
+      /// <param name="unparsed"> not used.</param>
+/*-----------------------------------------------------------------------------*/
       public static void About(string unparsed)
       {
          AboutForm aform = new AboutForm(BVSchemaChecker.MyAddin);
          aform.ShowDialog();
       }
+
+/*-----------------------------------------------------------------------------*/
       /// <summary>
       /// a command to allow the user to turn off and on the write to file hook.
       /// added per request to avoid potential conflict with some existing process.
       /// </summary>
-      /// <param name="unparsed"></param>
+      /// <param name="unparsed">on or off will do nothing for any other unparsed.
+      /// if no value then it will prompt the user to use on or off.</param>
+/*-----------------------------------------------------------------------------*/
       public static void ToggleWriteHook(string unparsed)
       {
          if (unparsed.Length == 0)

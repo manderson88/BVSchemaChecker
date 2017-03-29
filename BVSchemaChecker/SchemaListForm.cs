@@ -17,9 +17,19 @@
 /*
  * CHANGE LOG
  * $Archive: /MDL/BVSchemaChecker/SchemaListForm.cs $
- * $Revision: 1 $
- * $Modtime: 2/24/17 8:18a $
+ * $Revision: 3 $
+ * $Modtime: 3/29/17 9:57a $
  * $History: SchemaListForm.cs $
+ * 
+ * *****************  Version 3  *****************
+ * User: Mark.anderson Date: 3/29/17    Time: 10:18a
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the documentation per WPR review.
+ * 
+ * *****************  Version 2  *****************
+ * User: Mark.anderson Date: 3/22/17    Time: 4:08p
+ * Updated in $/MDL/BVSchemaChecker
+ * updated the format and documentation 
  * 
  * *****************  Version 1  *****************
  * User: Mark.anderson Date: 2/24/17    Time: 9:25a
@@ -39,11 +49,15 @@ using System.Windows.Forms;
 
 namespace BVSchemaChecker
 {
+/*-----------------------------------------------------------------------------*/
     /// <summary>
-    /// This is the form that displays the schema in the file.
+    /// This is the form that displays the names of the schema in the file.
     /// </summary>
+/*-----------------------------------------------------------------------------*/
    public partial class SchemaListForm :
-#if ADDIN
+#if ADDIN  //experimenting with using this preprocessor def to allow for toggling to 
+           //get the form to work in design mode.  to test this undefine ADDIN in the
+           //the project properties
       Bentley.MicroStation.WinForms.Adapter
 #else
       Form
